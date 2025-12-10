@@ -5,7 +5,11 @@ import { useUserStore } from '@/stores/user'
 const userStore = useUserStore()
 
 onMounted(() => {
-  userStore.initUserInfo()
+
+  const token = sessionStorage.getItem('token')
+  if (token) {
+    userStore.initUserInfo()
+  }
 })
 </script>
 

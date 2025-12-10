@@ -54,22 +54,30 @@ const router = createRouter({
 // 路由守卫
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
-  const token = localStorage.getItem('token')
+  const token = sessionStorage.getItem('token')
 
   if (to.meta.requiresAuth === false) {
-    // 登录页，如果已登录则跳转到首页
+   
     if (token) {
       next('/')
     } else {
       next()
     }
   } else {
-    // 需要认证的页面
+   
     if (token) {
+     
       if (!userStore.userInfo) {
         userStore.initUserInfo()
       }
-      next()
+     
+      if (userStore.userInfo && userStore.userInfo.role !== 'admin') {
+        sessionStorage.removeItem('token')
+        sessionStorage.removeItem('userInfo')
+        next('/login')
+      } else {
+        next()
+      }
     } else {
       next('/login')
     }

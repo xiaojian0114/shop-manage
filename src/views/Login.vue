@@ -56,7 +56,7 @@ const loginFormRef = ref<FormInstance>()
 const loading = ref(false)
 
 const loginForm = reactive({
-  phone: '13800138000',
+  phone: '15251859985',
   password: '123456'
 })
 
